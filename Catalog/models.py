@@ -21,7 +21,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name = 'Категория'
-        verbose_name = 'Категории'
+        verbose_name_plural = 'Категории'
         ordering = ["name"]
 
 
@@ -36,9 +36,7 @@ class Product(models.Model):
     )
     category = models.ForeignKey(
         Category,
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
+        on_delete=models.CASCADE,
         related_name="products",
     )
     purchase_price = models.FloatField(
@@ -49,6 +47,8 @@ class Product(models.Model):
     )
     updated_at = models.DateField(
         verbose_name="Дата последнего изменения(записи в БД)",
+        blank=True,
+        null=True,
     )
 
 
@@ -58,4 +58,4 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
-        ordering = ["name", "updated_at", "purchase_price", "category", "created_at"]
+        ordering = ["name","purchase_price", "category", "created_at"]
