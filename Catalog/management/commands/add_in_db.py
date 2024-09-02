@@ -8,13 +8,13 @@ class Command(BaseCommand):
 
     @staticmethod
     def json_read_categories():
-        with open('category.json', encoding='utf-16') as f:
+        with open('catalog.json') as f:
             categories_list = json.load(f)
             return categories_list
 
     @staticmethod
     def json_read_products():
-        with open('product.json', encoding='utf-16') as f:
+        with open('product.json') as f:
             product_list = json.load(f)
             return product_list
 
@@ -37,8 +37,8 @@ class Command(BaseCommand):
                 Product(pk=product['pk'],
                         name=product['fields']['name'],
                         description=product['fields']['description'],
-                        image=product['fields']['image'],
-                        cost=product['fields']['cost'],
+                        preview=product['fields']['preview'],
+                        purchase_price=product['fields']['purchase_price'],
                         created_at=product['fields']['created_at'],
                         updated_at=product['fields']['updated_at'],
                         category=Category.objects.get(pk=product['fields']['category']))
