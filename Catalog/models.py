@@ -13,21 +13,21 @@ class Task(models.Model):
 
 
 class Category(models.Model):
-    name = models.TextField(max_length="20", verbose_name="Наименование")
-    description = models.TextField(max_length="100", verbose_name="Описание")
+    name = models.CharField(max_length=20, verbose_name="Наименование")
+    description = models.CharField(max_length=100, verbose_name="Описание")
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
         ordering = ["name"]
 
 
 class Product(models.Model):
-    name = models.TextField(max_length="20", verbose_name="Наименование")
-    description = models.TextField(max_length="200", verbose_name="Описание")
+    name = models.CharField(max_length=20, verbose_name="Наименование")
+    description = models.CharField(max_length=200, verbose_name="Описание")
     preview = models.ImageField(
         upload_to="products/foto",
         blank=True,
@@ -43,14 +43,13 @@ class Product(models.Model):
         verbose_name="Цена за покупку",
     )
     created_at = models.DateField(
+        auto_now=True,
         verbose_name="Дата создания(записи в БД)",
     )
     updated_at = models.DateField(
+        auto_now_add=True,
         verbose_name="Дата последнего изменения(записи в БД)",
-        blank=True,
-        null=True,
     )
-
 
     def __str__(self):
         return self.name
@@ -58,4 +57,4 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
-        ordering = ["name","purchase_price", "category", "created_at"]
+        ordering = ["name", "purchase_price", "category", "created_at"]
