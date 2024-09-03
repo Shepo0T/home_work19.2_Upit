@@ -17,6 +17,7 @@
                     <strong class="d-inline-block mb-2 text-primary-emphasis">{{ object.purchase_price }} ₽</strong>
                     <h3 class="mb-0">{{ object.name }}</h3>
                     <p class="card-text mb-auto">{{ object.description }}</p>
+                    <a href="{% url 'Catalog:product' object.pk %}" class="btn btn-secondary" tabindex="-1" role="button">К товару</a>
                 </div>
                 <div class="col-auto d-none d-lg-block">
                     <img class='card-img-top' src="{{ object.preview | media_filter }}" width="250" height="300">
