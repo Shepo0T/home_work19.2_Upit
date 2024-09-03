@@ -13,7 +13,7 @@ class Task(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=20, verbose_name="Наименование")
+    name = models.CharField(max_length=100, verbose_name="Наименование")
     description = models.CharField(max_length=100, verbose_name="Описание")
 
     def __str__(self):
@@ -26,7 +26,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=20, verbose_name="Наименование")
+    name = models.CharField(max_length=100, verbose_name="Наименование")
     description = models.CharField(max_length=200, verbose_name="Описание")
     preview = models.ImageField(
         upload_to="products/foto",
@@ -43,11 +43,11 @@ class Product(models.Model):
         verbose_name="Цена за покупку",
     )
     created_at = models.DateField(
-        auto_now=True,
+        auto_now_add=True,
         verbose_name="Дата создания(записи в БД)",
     )
     updated_at = models.DateField(
-        auto_now_add=True,
+        auto_now=True,
         verbose_name="Дата последнего изменения(записи в БД)",
     )
 
