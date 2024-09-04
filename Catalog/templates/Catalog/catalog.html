@@ -16,7 +16,7 @@
                 <div class="col p-4 d-flex flex-column ">
                     <strong class="d-inline-block mb-2 text-primary-emphasis">{{ object.purchase_price }} ₽</strong>
                     <h3 class="mb-0">{{ object.name }}</h3>
-                    <p class="card-text mb-auto">{{ object.description }}</p>
+                    <p class="card-text mb-auto">{{ object.description[:100] }}</p>
                     <a href="{% url 'Catalog:product' object.pk %}" class="btn btn-secondary" tabindex="-1" role="button">К товару</a>
                 </div>
                 <div class="col-auto d-none d-lg-block">
