@@ -1,0 +1,25 @@
+{% extends 'Catalog/base.html' %}
+{% load my_tags%}
+{% block content %}
+<div class="row mb-2">
+    <div class="col-md-6">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary-emphasis">{{ object.purchase_price }} ₽</strong>
+                <h3 class="mb-0">{{ object.name }}</h3>
+                <p class="card-text mb-auto">{{ object.description }}</p>
+                <a href="#" class="btn btn-secondary disabled" tabindex="-1" role="button"
+                   aria-disabled="true">Купить</a>
+            </div>
+            <div class="col-auto d-none d-lg-block">
+                <img class='card-img-top' src="{{ object.preview | media_filter }}" width="200" height="250">
+            </div>
+        </div>
+        <div class="card-footer">
+            Просмотры: {{ object.views_count }}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -8,23 +8,35 @@
 </div>
 
 <div class="container">
-    <div class="row col-6">
-
+    <div class="row col-8">
         {% for object in object_list %}
-        <div class="cols-1 ">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 mx-auto">
-                <div class="col p-4 d-flex flex-column ">
-                    <strong class="d-inline-block mb-2 text-primary-emphasis">{{ object.purchase_price }} ₽</strong>
-                    <h3 class="mb-0">{{ object.name }}</h3>
-                    <p class="card-text mb-auto">{{ object.description }}</p>
-                    <a href="{% url 'Catalog:product' object.pk %}" class="btn btn-secondary" tabindex="-1" role="button">К товару</a>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                    <img class='card-img-top' src="{{ object.preview | media_filter }}" width="250" height="300">
+        <div class="col md-4">
+            <div class="card mb-2 box-shadow">
+                <div class="card-body">
+                    <div class="card_header">
+                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 mx-auto">
+                            <div class="col p-4 d-flex flex-column ">
+                                <strong class="d-inline-block mb-2 text-primary-emphasis">{{ object.purchase_price }}
+                                    ₽</strong>
+                                <h3 class="mb-0">{{ object.name }}</h3>
+                                <p class="card-text mb-auto">{{ object.description }}</p>
+                                <a href="{% url 'Catalog:product' object.pk %}" class="btn btn-secondary" tabindex="-1"
+                                   role="button">К товару</a>
+                            </div>
+                            <div class="col-12">
+                                <div class="card-body">
+                                    <div class="col-auto d-none d-lg-block">
+                                        <img class='card-img-top' src="{{ object.preview | media_filter }}" width="250"
+                                             height="300">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
