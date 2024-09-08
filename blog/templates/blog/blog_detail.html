@@ -1,0 +1,17 @@
+{% extends 'Catalog/base.html' %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">{{ object.title }} ({{ object.slug }})</h1>
+    <div class="card" style="width: 18rem;">
+        <img src="/media/{{ object.preview }}" class="card-img-top"/>
+    </div>
+    <p></p>
+    <div class="row col">
+        <p class="lead">{{ object.body }}</p>
+    </div>
+    <a href="{% url 'blog:blog_list' %}" type="submit" role="button" class="btn btn-success">К блогам</a>
+</div>
+
+
+{% endblock %}
