@@ -1,33 +1,33 @@
+from gettext import Catalog
+
 from django.shortcuts import render
+from django.views.generic import ListView, View, DetailView
 
 from Catalog.models import Product
 
+class HomeListView(ListView):
+    model = Product
+    template_name = 'Catalog/home.html'
 
-def home(request):
-    return render(request, 'Catalog/home.html')
-
-
-def catalog(request):
-    product_list = Product.objects.all()
-    context = {
-        'object_list': product_list,
-        'title': 'Главная'
-    }
-    return render(request, 'Catalog/catalog.html', context)
-
-
-def contacts(request):
-    if request.method == 'POST':
+class ContactsView(View):
+    def get(self,request,*args, **kwargs):
         name = request.POST.get('name')
         phone = request.POST.get('phone')
         message = request.POST.get('message')
         print(f' {name} ({phone}): {message})')
-    return render(request, 'Catalog/contacts.html')
 
+        return render(request, 'Catalog/contacts.html')
 
-def product(request, pk):
-    context = {
-        'products': Product.objects.get(pk=pk)
-    }
+class CatalogListView(ListView):
+    model = Product
+    template_name = 'Catalog/catalog.html'
 
-    return render(request, 'Catalog/product.html', context)
+class ProductDetailView(DetailView):
+    model = Product
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        self.object.views_count += 1
+        self.object.save()
+        return self.object
+
