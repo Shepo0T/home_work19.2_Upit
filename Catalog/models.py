@@ -1,6 +1,5 @@
 from django.db import models
 from django.db.models import ImageField
-from django.utils import timezone
 from django.views.decorators.http import last_modified
 
 
@@ -28,6 +27,7 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="Наименование")
     description = models.CharField(max_length=200, verbose_name="Описание")
+    views_count = models.IntegerField(default=0, verbose_name="просмотры")
     preview = models.ImageField(
         upload_to="products/foto",
         blank=True,
