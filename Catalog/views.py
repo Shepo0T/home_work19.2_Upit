@@ -18,9 +18,12 @@ class ContactsView(View):
 
         return render(request, 'Catalog/contacts.html')
 
+
 class CatalogListView(ListView):
     model = Product
     template_name = 'Catalog/catalog.html'
+
+
 
 class ProductDetailView(DetailView):
     model = Product
@@ -30,4 +33,5 @@ class ProductDetailView(DetailView):
         self.object.views_count += 1
         self.object.save()
         return self.object
+
 
