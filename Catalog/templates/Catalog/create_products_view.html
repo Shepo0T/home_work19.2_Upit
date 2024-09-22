@@ -1,0 +1,23 @@
+{% extends 'Catalog/base.html' %}
+
+{% block content %}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    {% for object in object_product %}
+    <div class="card" style="width: 25rem;">
+        <p class="lead">{{ object.name }}</p>
+        <p></p>
+        <div class="card-footer">
+                {% if object.is_active %}
+                <a class="btn btn-danger" href="{% url 'Catalog:toggle_activity_product' object.pk%}">Деактивировать продукт</a>
+                {% else %}
+                <a class="btn btn-success" href="{% url 'Catalog:toggle_activity_product' object.pk%}">Активировать
+                    продукт</a>
+                {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}
