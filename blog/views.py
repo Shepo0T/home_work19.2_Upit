@@ -27,7 +27,6 @@ class BlogDetailView(DetailView):
 
 class BlogDeleteView(DeleteView):
     model = Blog
-
     success_url = reverse_lazy('blog:blog_list')
 
 
@@ -71,12 +70,12 @@ def CreateBlogList(request):
     return render(request, 'blog/createblogs.html', context)
 
 def toggle_activity(request, pk):
-    student_item = get_object_or_404(Blog, pk=pk)
-    if student_item.is_published:
-        student_item.is_published = False
+    blog_item = get_object_or_404(Blog, pk=pk)
+    if blog_item.is_published:
+        blog_item.is_published = False
     else:
-        student_item.is_published = True
+        blog_item.is_published = True
 
-    student_item.save()
+    blog_item.save()
 
     return redirect(reverse('blog:blog_list'))
