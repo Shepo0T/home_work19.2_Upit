@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.forms import inlineformset_factory
 from django.shortcuts import render
@@ -70,13 +71,22 @@ class ProductDeleteView(DeleteView):
     success_url = reverse_lazy('Catalog:catalog')
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(CreateView, LoginRequiredMixin):
     model = Product
     form_class = ProductForm
 
-
     def get_success_url(self):
-        return reverse('Catalog:product', args=[self.kwargs.get('pk')])
+        return reverse('Catalog:catalog')
+
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save
+
+        return super().form_valid(form)
+
+
 
 
 def CreateProductView(request):

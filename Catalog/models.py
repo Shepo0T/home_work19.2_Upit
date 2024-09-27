@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models import ImageField
 from django.views.decorators.http import last_modified
 
+from users.models import NULLABLE, User
+
 
 class Task(models.Model):
     title = models.CharField("Название", max_length=50)
@@ -54,6 +56,7 @@ class Product(models.Model):
         default=True,
         verbose_name='Продается'
     )
+    owner = models.ForeignKey(User, verbose_name='Создатель', help_text='Укажите создателя продукта',on_delete=models.SET_NULL, **NULLABLE)
 
     def __str__(self):
         return self.name
@@ -61,7 +64,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
-        ordering = ["name", "purchase_price", "category", "created_at", "is_active"]
+        ordering = ["name", "purchase_price", "category", "created_at", "is_active", "owner"]
 
 
 class Version(models.Model):
