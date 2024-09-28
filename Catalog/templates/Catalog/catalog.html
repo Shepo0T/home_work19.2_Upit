@@ -17,7 +17,7 @@
 </div>
 <div class="container">
     <div class="row col-12 px-3">
-        {% if user.is_authenticated %}
+
         {% for object in object_list %}
         {% if object.is_active %}
         <div class="col-4">
@@ -50,7 +50,7 @@
         </div>
         {% endif %}
         {% endfor %}
-        {% endif %}
+
     </div>
 </div>
 {% endblock %}
