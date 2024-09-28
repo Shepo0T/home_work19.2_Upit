@@ -1,3 +1,6 @@
+import string
+import random
+
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
@@ -7,6 +10,9 @@ from config.settings import EMAIL_HOST_USER
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
 import secrets
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.forms import PasswordResetForm
+
 
 class RegisterView(CreateView):
     model = User
@@ -25,17 +31,19 @@ class RegisterView(CreateView):
 
         send_mail(
             subject='Подтверждение почты',
-            message='Для завершения регистрации пройдите по ссылке',
+            message=f'Для завершения регистрации пройдите по ссылке {url}',
             from_email=EMAIL_HOST_USER,
             recipient_list=[user.email]
         )
         return super().form_valid(form)
 
-def email_verefication(reques, token):
+
+def email_verification(request, token):
     user = get_object_or_404(User, token=token)
     user.is_active = True
     user.save()
     return redirect(reverse('users:login'))
+
 
 class ProfileView(UpdateView):
     model = User
@@ -44,3 +52,26 @@ class ProfileView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class UserPasswordResetView(PasswordResetView):
+
+    template_name = "users/password_reset_form.html"
+    form_class = PasswordResetForm
+    success_url = reverse_lazy("users:login")
+
+    def form_valid(self, form):
+        email = form.cleaned_data["email"]
+        user = User.objects.get(email=email)
+        if user:
+            password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+            user.set_password(password)
+            user.save()
+            send_mail(
+                    subject="Сброс пароля",
+                    message=f" Ваш новый пароль {password}",
+                    from_email=EMAIL_HOST_USER,
+                    recipient_list=[user.email],
+                )
+            return redirect(reverse("users:login"))
+

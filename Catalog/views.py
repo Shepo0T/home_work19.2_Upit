@@ -10,6 +10,11 @@ from Catalog.forms import ProductForm, VersionForm
 from Catalog.models import Product, Version
 
 
+class MyLoginRequiredMixin(LoginRequiredMixin):
+
+    login_url = 'users:login'
+    redirect_field_name = "redirect_to"
+
 class HomeListView(ListView):
     model = Product
     template_name = 'Catalog/home.html'
@@ -25,12 +30,12 @@ class ContactsView(View):
         return render(request, 'Catalog/contacts.html')
 
 
-class CatalogListView(ListView):
+class CatalogListView( ListView):
     model = Product
     template_name = 'Catalog/catalog.html'
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(MyLoginRequiredMixin, DetailView):
     model = Product
 
     def get_object(self, queryset=None):
@@ -40,7 +45,7 @@ class ProductDetailView(DetailView):
         return self.object
 
 
-class ProductUpdate(UpdateView):
+class ProductUpdate(MyLoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
 
@@ -66,12 +71,12 @@ class ProductUpdate(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(MyLoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('Catalog:catalog')
 
 
-class ProductCreateView(CreateView, LoginRequiredMixin):
+class ProductCreateView(MyLoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
 
@@ -82,7 +87,7 @@ class ProductCreateView(CreateView, LoginRequiredMixin):
         product = form.save()
         user = self.request.user
         product.owner = user
-        product.save
+        product.save()
 
         return super().form_valid(form)
 
@@ -109,3 +114,6 @@ def toggle_activity_product(request, pk):
     Product_item.save()
 
     return redirect(reverse('Catalog:catalog'))
+
+
+
