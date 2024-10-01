@@ -7,10 +7,10 @@ class Command(BaseCommand):
         user = User.objects.create(
             email='admin@project.upit',
             first_name='Admin',
-            last_name='Skypro',
-            is_staff=True,
-            is_superuser=True
-        )
+            last_name='Skypro',)
+        user.is_staff=True
+        user.is_superuser=True
+
 
         user.set_password('admin')
         user.save()
