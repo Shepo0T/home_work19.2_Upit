@@ -1,6 +1,6 @@
 from django.db import models
-from django.db.models import ImageField
-from django.views.decorators.http import last_modified
+
+
 
 from users.models import NULLABLE, User
 
@@ -65,7 +65,11 @@ class Product(models.Model):
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["name", "purchase_price", "category", "created_at", "is_active", "owner"]
-
+        permissions = [
+            ('can_edit_description', 'Может менять описание Продукта'),
+            ('can_edit_category','Может менять категорию любого продукта'),
+            ('can_edit_toggle', 'Может отменять публикацию продукта')
+        ]
 
 class Version(models.Model):
     product = models.ForeignKey(
