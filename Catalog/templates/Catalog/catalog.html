@@ -11,7 +11,7 @@
     {% if user.is_authenticated %}
     <a class="btn btn-outline-primary" href="{% url 'Catalog:create' %}">Добавить продукт</a>
     {% endif %}
-    {% if user.is_superuser %}
+    {% if perms.Catalog.can_edit_toggle or is_superuser %}
     <a class="btn btn-outline-primary" href="{% url 'Catalog:create_product_view' %}">Редактировать список продуктов</a>
     {% endif %}
 </div>
@@ -32,8 +32,12 @@
                     <strong class="d-inline-block mb-2 text-primary-emphasis">{{ object.purchase_price }} ₽</strong>
                     <div>
                         <a href="{% url 'Catalog:product' object.pk %}" class="btn btn-primary">Почитаем</a>
+                        {% if perms.Catalog.change_product or is_superuser or user == object.owner %}
                         <a href="{% url 'Catalog:update_product' object.pk %}" class="btn btn-primary">Редактировать</a>
+                        {% endif %}
+                        {% if perms.Catalog.delete_student %}
                         <a href="{% url 'Catalog:delete' object.pk %}" class="btn btn-primary">Удалить</a>
+                        {% endif %}
                     </div>
                     <div class="card-footer mt-1 ">
                         <li>Просмотры: {{ object.views_count }} </li>
