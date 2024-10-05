@@ -8,9 +8,8 @@ from django.views.generic import ListView, View, DetailView, UpdateView, DeleteV
 
 
 from Catalog.forms import ProductForm, VersionForm, ProductModeratorForm
-from Catalog.models import Product, Version
-
-
+from Catalog.models import Product, Version, Category
+from Catalog.service import get_category_from_cache
 
 
 class HomeListView(ListView):
@@ -123,4 +122,9 @@ def toggle_activity_product(request, pk):
     return redirect(reverse('Catalog:catalog'))
 
 
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'Catalog/category_list.html'
 
+    def get_queryset(self):
+        return get_category_from_cache()
