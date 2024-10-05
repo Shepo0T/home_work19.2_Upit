@@ -14,6 +14,7 @@
     {% if perms.Catalog.can_edit_toggle or is_superuser %}
     <a class="btn btn-outline-primary" href="{% url 'Catalog:create_product_view' %}">Редактировать список продуктов</a>
     {% endif %}
+    <a class="btn btn-outline-primary" href="{% url 'Catalog:category_list' %}">Список категорий</a>
 </div>
 <div class="container">
     <div class="row col-12 px-3">
